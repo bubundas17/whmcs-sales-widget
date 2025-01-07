@@ -21,6 +21,39 @@
             }
         });
     </script>
+    <style>
+        @keyframes subtle-shift {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(1px, 0.5px); }
+            50% { transform: translate(0.5px, 1px); }
+            75% { transform: translate(-0.5px, 0.5px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .card {
+            animation: subtle-shift 20s infinite ease-in-out;
+        }
+
+        .card:nth-child(2n) {
+            animation-delay: -5s;
+        }
+
+        .card:nth-child(3n) {
+            animation-delay: -10s;
+        }
+
+        h1, h2, h3, .table {
+            animation: subtle-shift 25s infinite ease-in-out;
+        }
+
+        .dashboard-header p {
+            animation: subtle-shift 22s infinite ease-in-out;
+        }
+
+        .theme-toggle {
+            animation: subtle-shift 28s infinite ease-in-out;
+        }
+    </style>
 </head>
 <body class="prevent-sleep">
     <div class="burn-prevention"></div>
@@ -28,11 +61,11 @@
         <div class="spinner"></div>
     </div>
 
-    <div class="theme-toggle">
+    <div class="theme-toggle d-flex gap-2 position-fixed top-0 end-0 m-3">
         <button class="btn btn-icon" id="theme-toggle">
             <i class="bi bi-moon-stars-fill"></i>
         </button>
-        <button class="btn btn-icon ms-2" id="fullscreen-toggle">
+        <button class="btn btn-icon" id="fullscreen-toggle">
             <i class="bi bi-fullscreen"></i>
         </button>
     </div>
