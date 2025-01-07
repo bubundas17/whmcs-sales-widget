@@ -108,6 +108,23 @@ async function refreshData(isAutoRefresh = false) {
     }
 }
 
+// Main refresh function with cache clear
+async function refreshWithCache() {
+    try {
+        setLoading(true);
+        // Clear backend cache
+        await fetch('/api/cache/clear', { method: 'POST' });
+        // Clear frontend cache
+        localStorage.removeItem('dashboard_cache');
+        // Refresh data
+        await refreshData();
+    } catch (error) {
+        console.error('Failed to clear cache:', error);
+    } finally {
+        setLoading(false);
+    }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Theme initialization
@@ -124,6 +141,27 @@ document.addEventListener('DOMContentLoaded', () => {
         html.setAttribute('data-bs-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         icon.className = newTheme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+    });
+
+    // Fullscreen toggle initialization
+    const fullscreenToggle = document.getElementById('fullscreen-toggle');
+    fullscreenToggle.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            fullscreenToggle.querySelector('i').classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
+        } else {
+            document.exitFullscreen();
+            fullscreenToggle.querySelector('i').classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        const icon = fullscreenToggle.querySelector('i');
+        if (document.fullscreenElement) {
+            icon.classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
+        } else {
+            icon.classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
+        }
     });
 
     // Initial data load

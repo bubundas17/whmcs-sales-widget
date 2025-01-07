@@ -61,24 +61,21 @@
         <div class="spinner"></div>
     </div>
 
-    <div class="theme-toggle d-flex gap-2 position-fixed top-0 end-0 m-3">
-        <button class="btn btn-icon" id="theme-toggle">
-            <i class="bi bi-moon-stars-fill"></i>
-        </button>
-        <button class="btn btn-icon" id="fullscreen-toggle">
-            <i class="bi bi-fullscreen"></i>
-        </button>
-    </div>
-
     <div class="container mt-4">
         <div class="dashboard-header">
             <div>
                 <h1 class="mb-2">Sales Dashboard</h1>
                 <p class="text-muted mb-4">Last updated: <span id="last-update">-</span></p>
             </div>
-            <div class="dashboard-actions">
-                <button class="btn btn-outline-primary btn-sm" onclick="refreshData()">
-                    <i class="bi bi-arrow-clockwise"></i> Refresh
+            <div class="dashboard-actions d-flex gap-2">
+                <button class="btn btn-icon btn-outline-primary btn-sm" onclick="refreshWithCache()">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                <button class="btn btn-icon btn-outline-secondary btn-sm" id="theme-toggle">
+                    <i class="bi bi-moon-stars-fill"></i>
+                </button>
+                <button class="btn btn-icon btn-outline-secondary btn-sm" id="fullscreen-toggle">
+                    <i class="bi bi-fullscreen"></i>
                 </button>
             </div>
         </div>
@@ -146,26 +143,5 @@
 
     <audio id="notification" src="/effects/kaching.mp3"></audio>
     <script src="/js/dashboard.js"></script>
-    <script>
-        const fullscreenToggle = document.getElementById('fullscreen-toggle');
-        fullscreenToggle.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-                fullscreenToggle.querySelector('i').classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
-            } else {
-                document.exitFullscreen();
-                fullscreenToggle.querySelector('i').classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
-            }
-        });
-
-        document.addEventListener('fullscreenchange', () => {
-            const icon = fullscreenToggle.querySelector('i');
-            if (document.fullscreenElement) {
-                icon.classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
-            } else {
-                icon.classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
-            }
-        });
-    </script>
 </body>
 </html>
