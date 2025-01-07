@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  sales-widget:
+    build: .
+    container_name: sales-widget
+    hostname: sales-widget
+    restart: always
+    env_file: .env
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    networks:
+      macvlan_network:
+        ipv4_address: ${CONTAINER_IP}
+
+networks:
+  macvlan_network:
+    external:
+      name: main-net
