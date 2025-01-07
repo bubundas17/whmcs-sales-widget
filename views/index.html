@@ -32,6 +32,9 @@
         <button class="btn btn-icon" id="theme-toggle">
             <i class="bi bi-moon-stars-fill"></i>
         </button>
+        <button class="btn btn-icon ms-2" id="fullscreen-toggle">
+            <i class="bi bi-fullscreen"></i>
+        </button>
     </div>
 
     <div class="container mt-4">
@@ -110,5 +113,26 @@
 
     <audio id="notification" src="/effects/kaching.mp3"></audio>
     <script src="/js/dashboard.js"></script>
+    <script>
+        const fullscreenToggle = document.getElementById('fullscreen-toggle');
+        fullscreenToggle.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                fullscreenToggle.querySelector('i').classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
+            } else {
+                document.exitFullscreen();
+                fullscreenToggle.querySelector('i').classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
+            }
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            const icon = fullscreenToggle.querySelector('i');
+            if (document.fullscreenElement) {
+                icon.classList.replace('bi-fullscreen', 'bi-fullscreen-exit');
+            } else {
+                icon.classList.replace('bi-fullscreen-exit', 'bi-fullscreen');
+            }
+        });
+    </script>
 </body>
 </html>
